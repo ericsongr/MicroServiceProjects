@@ -42,7 +42,7 @@ jobs:
       #   run: dotnet test
           
   DEPLOY_DEVELOPMENT: #sales.rixplorer.com
-    name: Build package and deploy to Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
+    name: Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
     if: github.event_name == 'pull_request'
     needs: BUILD_MICRO_KO
     runs-on: windows-latest
@@ -65,7 +65,7 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
 
-  MY_DEPLOY_STAGING:
+  DEPLOY_STAGING:
     name: Deploy to staging
     if: github.event.ref == 'refs/heads/master'
     needs: BUILD_MICRO_KO
@@ -89,9 +89,9 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
           
-  MY_DEPLOY_PRODUCTION:
+  DEPLOY_PRODUCTION:
     name: Deploy to production
-    needs: MY_DEPLOY_STAGING
+    needs: [DEPLOY_STAGING, APPROVAL]
     runs-on: windows-latest
     environment:
       name: Production
@@ -111,3 +111,13 @@ jobs:
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
+          
+  APPROVAL:
+    runs-on: windows-latest
+    needs: BUILD_MICRO_KO
+    steps:
+      - name: Wait for Approval of two
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.workflows.run.outputs.needs = '2' 

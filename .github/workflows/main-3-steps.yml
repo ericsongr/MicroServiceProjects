@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: 3 STEPS - Deploy to DEVELOPMENT/STAGING/PRODUCTION - smarterasp.net
+name: 4 Jobs - BUILD/ AND Deploy to DEVELOPMENT/STAGING/PRODUCTION - smarterasp.net
 on:
   #push:
   #  branches: [ "master" ]
@@ -37,14 +37,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: restored-packages
-          path: D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\publish\ #${{default-working-directory}}/obj
+          path: D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\ #${{default-working-directory}}/obj
       # - name: Test with .NET
       #   run: dotnet test
           
   DEPLOY_DEVELOPMENT: #sales.rixplorer.com
     name: Build package and deploy to Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
     if: github.event_name == 'pull_request'
-    needs: [BUILD_MICRO_KO]
+    needs: BUILD_MICRO_KO
     runs-on: windows-latest
     environment:
       name: Development
@@ -68,7 +68,7 @@ jobs:
   DEPLOY_STAGING:
     name: Deploy to staging
     if: github.event.ref == 'refs/heads/master'
-    needs: [BUILD_MICRO_KO]
+    needs: BUILD_MICRO_KO
     runs-on: windows-latest
     environment:
       name: Staging
@@ -91,7 +91,7 @@ jobs:
           
   DEPLOY_PRODUCTION:
     name: Deploy to production
-    needs: [DEPLOY_STAGING]
+    needs: DEPLOY_STAGING
     runs-on: windows-latest
     environment:
       name: Production

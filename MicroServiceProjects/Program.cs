@@ -71,6 +71,11 @@ app.MapGet("/ericson", () =>
     return "Great Senior Software Engineer";
 });
 
+app.MapGet("/sherine", () =>
+{
+    return "Ericson Wife";
+});
+
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

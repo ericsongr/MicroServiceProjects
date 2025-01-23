@@ -91,7 +91,7 @@ jobs:
           
   DEPLOY_PRODUCTION:
     name: Deploy to production
-    needs: [DEPLOY_STAGING, APPROVAL]
+    needs: [DEPLOY_STAGING] #, APPROVAL
     runs-on: windows-latest
     environment:
       name: Production
@@ -112,12 +112,12 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
           
-  APPROVAL:
-    runs-on: windows-latest
-    needs: DEPLOY_STAGING
-    steps:
-      - name: Wait for Approval of two
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.workflows.run.outputs.needs = '2' 
+#  APPROVAL:
+#    runs-on: windows-latest
+#    needs: DEPLOY_STAGING
+#    steps:
+#      - name: Wait for Approval of two
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
+#            github.workflows.run.outputs.needs = '2' 

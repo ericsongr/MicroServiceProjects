@@ -54,13 +54,9 @@ app.MapGet("/sons", () =>
 
 app.MapGet("/ericson", () =>
 {
-    return "Great Senior Software Engineer";
+    return "Senior Software Engineer";
 });
 
-app.MapGet("/sherine", () =>
-{
-    return "Ericson Wife";
-});
 
 app.Run();
 

@@ -11,7 +11,7 @@ on:
 jobs:
   BUILD_MICRO_KO:
     name: Build package
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
     
@@ -29,7 +29,15 @@ jobs:
         run: dotnet build ./MicroServiceProjects.sln --configuration Release --no-restore
         env:
           SKIP_DATABASE_UPGRADER: true
-       
+          
+      - name: Publish
+        run: dotnet publish ./MicroServiceProjects.sln --configuration Release --no-restore
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: restored-packages
+          path: \MicroServiceProjects\bin\Release\net8.0 #${{default-working-directory}}/obj
       # - name: Test with .NET
       #   run: dotnet test
           
@@ -42,9 +50,11 @@ jobs:
       name: Development
       url: https://sales.ricxplorer.com/
     steps:
-      - name: Publish
-        run: dotnet publish ./MicroServiceProjects.sln --configuration Release --no-restore
-        
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: restored-packages
+          
       - name: Deploy to Simply        
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:
@@ -63,9 +73,11 @@ jobs:
       name: Staging
       url: https://inventory.ricxplorer.com/
     steps:
-      - name: Publish
-        run: dotnet publish ./MicroServiceProjects.sln --configuration Release --no-restore
-        
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: restored-packages
+          
       - name: Deploy to Staging        
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:
@@ -83,6 +95,11 @@ jobs:
       name: Production
       url: https://microprod.ricxplorer.com	
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: restored-packages
+          
       - name: Deploy to Production        
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:

@@ -65,7 +65,7 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
 
-  DEPLOY_STAGING:
+  MY_DEPLOY_STAGING:
     name: Deploy to staging
     if: github.event.ref == 'refs/heads/master'
     needs: BUILD_MICRO_KO
@@ -89,9 +89,9 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
           
-  DEPLOY_PRODUCTION:
+  MY_DEPLOY_PRODUCTION:
     name: Deploy to production
-    needs: DEPLOY_STAGING
+    needs: MY_DEPLOY_STAGING
     runs-on: windows-latest
     environment:
       name: Production

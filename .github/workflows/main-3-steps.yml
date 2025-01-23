@@ -62,7 +62,7 @@ jobs:
           server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
-          source-path: 'D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\publish\'
+          source-path: '\MicroServiceProjects\bin\Release\net8.0'
 
   DEPLOY_STAGING:
     name: Deploy to staging
@@ -85,7 +85,7 @@ jobs:
           server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
-          source-path: 'D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\publish\'
+          source-path: '\MicroServiceProjects\bin\Release\net8.0'
           
   DEPLOY_PRODUCTION:
     name: Deploy to production
@@ -107,4 +107,4 @@ jobs:
           server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
-          source-path: 'D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\publish\'
+          source-path: '\MicroServiceProjects\bin\Release\net8.0'

@@ -13,7 +13,7 @@ var summaries = new[]
     "1Freezing", "1Bracing", "1Chilly", "1Cool", "1M1ild", "1Warm", "1Balmy", "1Hot", "1S1weltering", "1Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/today", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast

@@ -58,13 +58,7 @@ app.MapGet("/family", () =>
             FirstName = "Sherine",
             SecondName = "Grace",
             Age = 35
-        },
-        new MyFamily{
-            Id = 6,
-            FirstName = "Another",
-            SecondName = "baby",
-            Age = 1
-        },
+        }
         
 
     };

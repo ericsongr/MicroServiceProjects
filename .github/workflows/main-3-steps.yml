@@ -34,7 +34,7 @@ jobs:
         run: dotnet publish ./MicroServiceProjects.sln --configuration Release --no-restore
 
       - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: restored-packages
           path: D:\a\MicroServiceProjects\MicroServiceProjects\MicroServiceProjects\bin\Release\net8.0\publish\ #${{default-working-directory}}/obj
@@ -51,7 +51,7 @@ jobs:
       url: https://sales.ricxplorer.com/
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: restored-packages
           path: .\MicroServiceProjects\bin\Release\net8.0
@@ -75,7 +75,7 @@ jobs:
       url: https://inventory.ricxplorer.com/
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: restored-packages
           path: .\MicroServiceProjects\bin\Release\net8.0
@@ -98,7 +98,7 @@ jobs:
       url: https://microprod.ricxplorer.com	
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: restored-packages
           path: .\MicroServiceProjects\bin\Release\net8.0

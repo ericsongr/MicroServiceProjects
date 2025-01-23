@@ -3,8 +3,8 @@
 
 name: 4 Jobs - BUILD/ AND Deploy to DEVELOPMENT/STAGING/PRODUCTION - smarterasp.net
 on:
-  #push:
-  #  branches: [ "master" ]
+  push:
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -43,7 +43,7 @@ jobs:
           
   DEPLOY_DEVELOPMENT: #sales.rixplorer.com
     name: Build package and deploy to Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
-    #if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request'
     needs: BUILD_MICRO_KO
     runs-on: windows-latest
     environment:
@@ -67,7 +67,7 @@ jobs:
 
   MY_DEPLOY_STAGING:
     name: Deploy to staging
-    #if: github.event.ref == 'refs/heads/master'
+    if: github.event.ref == 'refs/heads/master'
     needs: BUILD_MICRO_KO
     runs-on: windows-latest
     environment:

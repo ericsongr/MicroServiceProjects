@@ -54,7 +54,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: restored-packages
-          path: \MicroServiceProjects\bin\Release\net8.0
+          path: .\MicroServiceProjects\bin\Release\net8.0
           
       - name: Deploy to Simply        
         uses: talunzhang/auto-web-deploy@v1.0.1
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: restored-packages
-          path: \MicroServiceProjects\bin\Release\net8.0
+          path: .\MicroServiceProjects\bin\Release\net8.0
           
       - name: Deploy to Staging        
         uses: talunzhang/auto-web-deploy@v1.0.1
@@ -101,7 +101,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: restored-packages
-          path: \MicroServiceProjects\bin\Release\net8.0
+          path: .\MicroServiceProjects\bin\Release\net8.0
           
       - name: Deploy to Production        
         uses: talunzhang/auto-web-deploy@v1.0.1

@@ -26,7 +26,7 @@ app.MapGet("/today", () =>
     return forecast;
 });
 
-app.MapGet("/family", () =>
+app.MapGet("/sons", () =>
 {
     var family = new List<MyFamily> {
         new MyFamily{
@@ -46,21 +46,7 @@ app.MapGet("/family", () =>
             FirstName = "Garet",
             SecondName = "Glaiza",
             Age = 2
-        },
-        new MyFamily{
-            Id = 4,
-            FirstName = "Eric",
-            SecondName = "Son",
-            Age = 38
-        },
-        new MyFamily{
-            Id = 5,
-            FirstName = "Sherine",
-            SecondName = "Grace",
-            Age = 35
         }
-        
-
     };
 
     return family;

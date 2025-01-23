@@ -114,7 +114,7 @@ jobs:
           
   APPROVAL:
     runs-on: windows-latest
-    needs: BUILD_MICRO_KO
+    needs: DEPLOY_STAGING
     steps:
       - name: Wait for Approval of two
         uses: actions/github-script@v6

@@ -48,3 +48,20 @@ jobs:
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
+
+  deploy_staging:
+    name: Deploy to staging
+    if: github.event.ref == 'refs/heads/master'
+    runs-on: windows-latest
+    environment:
+      name: Staging
+      url: https://inventory.ricxplorer.com/
+    steps:
+      - name: Deploy to Staging        
+        uses: talunzhang/auto-web-deploy@v1.0.1
+        with:
+          website-name: ${{ secrets.WEBSITE8_NAME }}
+          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.SERVER_USERNAME }}
+          server-password: ${{ secrets.SERVER_PASSWORD }}
+          source-path: '\MicroServiceProjects\bin\Release\net8.0'

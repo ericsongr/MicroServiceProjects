@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: 3 STEPS - Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
+name: 3 STEPS - Deploy to DEVELOPMENT/STAGING/PRODUCTION - smarterasp.net
 on:
   push:
     branches: [ "master" ]
@@ -9,13 +9,9 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build_and_deploy_development: #sales.rixplorer.com
-    name: Build package and deploy to Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
-    if: github.event_name == 'pull_request'
+  BUILD_MICRO_KO:
+    name: Build package
     runs-on: windows-latest
-    environment:
-      name: Development
-      url: https://sales.ricxplorer.com/
     steps:
       - uses: actions/checkout@v4
     
@@ -39,7 +35,16 @@ jobs:
         
       # - name: Test with .NET
       #   run: dotnet test
-
+          
+  DEPLOY_DEVELOPMENT: #sales.rixplorer.com
+    name: Build package and deploy to Deploy to "sales.ricxplorer.com" subsite8 - smarterasp.net
+    if: github.event_name == 'pull_request'
+    needs: [BUILD_MICRO_KO]
+    runs-on: windows-latest
+    environment:
+      name: Development
+      url: https://sales.ricxplorer.com/
+    steps:
       - name: Deploy to Simply        
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:
@@ -49,38 +54,36 @@ jobs:
           server-password: ${{ secrets.SERVER_PASSWORD }}
           source-path: '\MicroServiceProjects\bin\Release\net8.0'
 
-  deploy_staging:
+  DEPLOY_STAGING:
     name: Deploy to staging
     if: github.event.ref == 'refs/heads/master'
+    needs: [BUILD_MICRO_KO]
     runs-on: windows-latest
     environment:
       name: Staging
       url: https://inventory.ricxplorer.com/
     steps:
-      - uses: actions/checkout@v4
-    
-      - name: Setup .NET Core - Staging
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 6.0
-          
-      - name: Install dependencies - Staging
-        run: dotnet restore ./MicroServiceProjects.sln #--ignore-failed-sources #--property:BUILD_ENVIRONMENT=GitHubActions
-        #env:
-        #  SKIP_DATABASE_UPGRADER: true
-          
-      - name: Build - Staging
-        run: dotnet build ./MicroServiceProjects.sln --configuration Release --no-restore
-        env:
-          SKIP_DATABASE_UPGRADER: true
-
-      - name: Publish - Staging
-        run: dotnet publish ./MicroServiceProjects.sln --configuration Release --no-restore
-        
       - name: Deploy to Staging        
         uses: talunzhang/auto-web-deploy@v1.0.1
         with:
           website-name: ${{ secrets.WEBSITE3_NAME }}
+          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.SERVER_USERNAME }}
+          server-password: ${{ secrets.SERVER_PASSWORD }}
+          source-path: '\MicroServiceProjects\bin\Release\net8.0'
+          
+  DEPLOY_PRODUCTION:
+    name: Deploy to production
+    needs: [DEPLOY_STAGING]
+    runs-on: windows-latest
+    environment:
+      name: Production
+      url: https://microprod.ricxplorer.com	
+    steps:
+      - name: Deploy to Production        
+        uses: talunzhang/auto-web-deploy@v1.0.1
+        with:
+          website-name: ${{ secrets.WEBSITE9_NAME }}
           server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
           server-username: ${{ secrets.SERVER_USERNAME }}
           server-password: ${{ secrets.SERVER_PASSWORD }}
